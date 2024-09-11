@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
             { title: 'GitHub', icon: 'github', urlPattern: 'github.com' },
             { title: 'YouTube', icon: 'youtube', urlPattern: 'youtube.com' },
             { title: 'Frontend Mentor', icon: 'frontend-mentor', urlPattern: 'frontendmentor.io' },
-            { title: 'Twitter', icon: 'twitter', urlPattern: 'twitter.com' },
+            { title: 'X', icon: 'x', urlPattern: 'x.com' },
             { title: 'LinkedIn', icon: 'linkedin', urlPattern: 'linkedin.com' },
             { title: 'Facebook', icon: 'facebook', urlPattern: 'facebook.com' },
             { title: 'Twitch', icon: 'twitch', urlPattern: 'twitch.tv' },
