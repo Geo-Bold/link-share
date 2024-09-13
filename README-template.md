@@ -1,28 +1,26 @@
-# Frontend Mentor - Link-sharing app solution
-
-This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+# Link-share
+This project is a multi-page application that lets users gather and share all of their social links along with their profile using a single generated url. This is done using the client to handle all interactions as well as routing while the data persistence and user authentication is handled by Supabase. Users can interact with the application without loggin in, however to generate the unique url and allow sharing a new user must create an account and log in. 
 
 ## Table of contents
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
-- [Author](#author)
-- [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
+- [Link-share](#link-share)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+    - [The challenge](#the-challenge)
+    - [Screenshot](#screenshot)
+    - [Links](#links)
+  - [My process](#my-process)
+    - [Built with](#built-with)
+    - [What I learned](#what-i-learned)
+    - [Continued development](#continued-development)
+  - [Author](#author)
+  - [Acknowledgments](#acknowledgments)
 
 ## Overview
 
 ### The challenge
 
-Users should be able to:
+The challenge was creating an application that allowed users to:
 
 - Create, read, update, delete links and see previews in the mobile mockup
 - Receive validations if the links form is submitted without a URL or with the wrong URL pattern for the platform
@@ -37,83 +35,44 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![](./src/assets/images/link-share-preview.png)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Frontend Mentor](https://www.frontendmentor.io/profile/Geo-Bold)
+- Live Site URL: [Pixel Gallery](https://geobold.dev/projects/link-share/)
 
 ## My process
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
+- Native HTML 5
+- Native CSS
+- Native JavaScript
 - Flexbox
 - CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- Supabase
+- [Custom Dropdown Select Menu](https://codepen.io/alvarotrigo/pen/QWmZYJr) by Alvaro
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
-
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
-```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
-```
-
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+Over the last nine months, my aim for each project that I began was to follow the designers vision to the greatest degree possible. This taught me patience, for one, but also gave me control over each project to a high degree and forced me to find solutions to problems that would otherwise have gone ignored. This project was different. After purusing the Frontend Mentor discord, I stumbled upon several implementations such as [Curtis](https://github.com/webguy83) which left me stunned. Armed with this, I sought about planning the database schema as well as drawing out the UML diagrams.
+>
+My first divergence from the classic solution was the fact that I wanted the user to be able to interact with the application without having to create an account first or allow them access to a dev account. Accordingly, I planned to allow the user access to the application, but only generate the custom url and save the the database after authenticating.
+>
+My second idea was the creation of a multi-page application which had the unforseen consequence of having to deal with maintaining state across multiple pages. My solution was to encapsulate data in local storage and retrieve upon page load. Understanding that this by no means was the optimal solution, it gave me an opportunity to problem solve in a way that allowed me to learn, especially about state management and working with JSON data.
+>
+While the project is still a work in progress, I can am comfortable with moving past native JS and moving to the land of frameworks.
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
-
-### Useful resources
-
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+As of 09/11/2024 this project is still in development, requiring certain QoL features which are noted in my GitHub under issues.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
+- Website - [Geo Archbold](https://geobold.dev/)
+- Frontend Mentor - [@Geo-Bold](https://www.frontendmentor.io/profile/Geo-Bold)
 
 ## Acknowledgments
 
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+A special thank you to [Anthony](https://github.com/anthonyisensee) for his incredible insights and support.
