@@ -1,5 +1,6 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 import { Renderer } from './Renderer.js'
+import { Notify } from './Notification.js'
 
 /**
  * The `Session` class handles user authentication, session management, and interaction with Supabase's auth API.
@@ -89,15 +90,21 @@ export class Session {
      */
     static async createUser({ email, password }) {
 
-        const { user, error } = await Session.#client.auth.signUp({ email, password })
+        try {
 
-        if (error) throw new Error(error.message)
+            const { user, error } = await Session.#client.auth.signUp({ email, password })
 
-        Session.#user = user
+            if (error) throw new Error(error.message)
 
-        Session.#isLoggedIn = true
+            Session.#user = user
 
-        return user
+            Session.#isLoggedIn = true
+
+            new Notify('A verification link has been sent to your email.', 'information')
+
+            return user
+
+        } catch (error) { console.error("Error in createUser: ", error.message) }
 
     }
 
@@ -157,13 +164,17 @@ export class Session {
      */
     static async getUserDetails() {
 
-        if (!Session.#isLoggedIn) throw new Error('User is not logged in.')
+        try {
+            
+            if (!Session.#isLoggedIn) throw new Error('User is not logged in.')
 
-        const { data, error } = await Session.#client.from('profiles').select('*').eq('id', Session.#user.id).single()
+            const { data, error } = await Session.#client.from('profiles').select('*').eq('id', Session.#user.id).single()
+    
+            if (error) throw new Error(error.message)
+    
+            return data
 
-        if (error) throw new Error(error.message)
-
-        return data
+        } catch (error) { console.error("Error in getUserDetails: ", error.message) }
 
     }
 
@@ -175,17 +186,21 @@ export class Session {
      */
     static async initialize() {
 
-        Session.#anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2eHRqc3Jxcmp3aHRteGt6d2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjIxODA1ODYsImV4cCI6MjAzNzc1NjU4Nn0.tpsW736ywZy-CHU5lkm0zcOZo_PwbUpuAwwVd7lXqUU'
+        try {
+            
+            Session.#anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2eHRqc3Jxcmp3aHRteGt6d2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjIxODA1ODYsImV4cCI6MjAzNzc1NjU4Nn0.tpsW736ywZy-CHU5lkm0zcOZo_PwbUpuAwwVd7lXqUU'
 
-        Session.#databaseUrl = 'https://cvxtjsrqrjwhtmxkzwbz.supabase.co'
+            Session.#databaseUrl = 'https://cvxtjsrqrjwhtmxkzwbz.supabase.co'
 
-        Session.#client = createClient(Session.#databaseUrl, Session.#anonKey)
+            Session.#client = createClient(Session.#databaseUrl, Session.#anonKey)
 
-        Session.#user = null
+            Session.#user = null
 
-        Session.addEventListener()
+            Session.addEventListener()
 
-        await Session.refreshSession()
+            await Session.refreshSession()
+
+        } catch (error) { console.error("Error in initialize: ", error.message) }
 
     }
 
@@ -234,11 +249,15 @@ export class Session {
      */
     static async resetPassword(email) {
 
-        const { error } = await Session.#client.auth.resetPasswordForEmail(email)
+        try {
+            
+            const { error } = await Session.#client.auth.resetPasswordForEmail(email)
 
-        if (error) throw new Error(error.message)
+            if (error) throw new Error(error.message)
 
-        return 'Password reset email sent.'
+            return 'Password reset email sent.'
+
+        } catch (error) { console.error("Error in resetPassword: ", error.message) }
 
     }
 
@@ -250,15 +269,19 @@ export class Session {
      */
     static async retrieveSession() {
 
-        const { data, error } = await Session.#client.auth.getSession()
+        try {
+            
+            const { data, error } = await Session.#client.auth.getSession()
 
-        if (error) throw new Error(error.message)
+            if (error) throw new Error(error.message)
 
-        Session.#user = data.session?.user ?? null
+            Session.#user = data.session?.user ?? null
 
-        Session.#isLoggedIn = !!Session.#user
+            Session.#isLoggedIn = !!Session.#user
 
-        return Session.#user
+            return Session.#user
+
+        } catch (error) { console.error("Error in retrieveSession: ", error.message) }
 
     }
 
@@ -273,15 +296,21 @@ export class Session {
      */
     static async signInUser({ email, password }) {
 
-        const { user, error } = await Session.#client.auth.signInWithPassword({ email, password })
+        try {
+            
+            const { user, error } = await Session.#client.auth.signInWithPassword({ email, password })
 
-        if (error) throw new Error(error.message)
+            if (error) throw new Error(error.message)
 
-        Session.#user = user
+            Session.#user = user
 
-        Session.#isLoggedIn = true
+            Session.#isLoggedIn = true
 
-        return user
+            new Notify('Login successful, welcome!', 'success')
+
+            return user
+
+        } catch (error) { console.error("Failed to sign in user: ", error.message) }
 
     }
 
@@ -293,15 +322,19 @@ export class Session {
      */
     static async signOutUser() {
 
-        const { error } = await Session.#client.auth.signOut()
+        try {
+            
+            const { error } = await Session.#client.auth.signOut()
 
-        if (error) throw new Error(error.message)
+            if (error) throw new Error(error.message)
 
-        Session.#user = null
+            Session.#user = null
 
-        Session.#isLoggedIn = false
+            Session.#isLoggedIn = false
 
-        return Session.#user
+            return Session.#user
+
+        } catch (error) { console.error("Failed to logout user: ", error.message) }
 
     }
 
@@ -314,11 +347,15 @@ export class Session {
      */
     static async updatePassword(newPassword) {
 
-        const { error } = await Session.#client.auth.updateUser({ password: newPassword })
+        try {
+            
+            const { error } = await Session.#client.auth.updateUser({ password: newPassword })
 
-        if (error) throw new Error(error.message)
+            if (error) throw new Error(error.message)
 
-        return 'Password updated successfully.'
+            return 'Password updated successfully.'
+
+        } catch (error) { console.error("Error in updatePassword: ", error.message) }
 
     }
 
@@ -331,13 +368,17 @@ export class Session {
      */
     static async updateUserProfile(updates) {
 
-        const { user, error } = await Session.#client.auth.updateUser(updates)
+        try {
+            
+            const { user, error } = await Session.#client.auth.updateUser(updates)
 
-        if (error) throw new Error(error.message)
+            if (error) throw new Error(error.message)
 
-        Session.#user = user
+            Session.#user = user
 
-        return user
+            return user
+
+        } catch (error) { console.error("Error in updateUserProfile: ", error.message) }
 
     }
 

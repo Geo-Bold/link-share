@@ -9,6 +9,8 @@ export class VersionControl {
     static #database
     static #localStorage
 
+    static getDatabase() { return VersionControl.#database }
+    static getLocal() { return VersionControl.#localStorage }
     /**
      * Converts a Base64 string to a Blob object.
      * 
@@ -60,45 +62,29 @@ export class VersionControl {
 
         try {
 
+            let cloudData
+
             const naiveUser = Session.getIdFromUrlHash()
 
             const localData = this.pullFromLocal()
 
-            const cloudData = naiveUser ? await this.#pullFromCloud(naiveUser) : await this.#pullFromCloud()
+            if (Session.isLoggedIn()) cloudData = await this.#pullFromCloud()
 
-            if (!Session.isLoggedIn() && naiveUser.length > 0) {
+            if (!Session.isLoggedIn() && naiveUser) cloudData = await this.#pullFromCloud(naiveUser)
 
-                return cloudData
-
-            } else if (Session.isLoggedIn() && localData) {
-
-                console.log('User logged in. Fetching from local storage.')
+            if (Session.isLoggedIn() && localData || localData) {
 
                 this.#syncWithCloud(localData) // DEV: dont wait for the sync to fetch from local. if local needs to updated, reload the page from inside syncWithCloud
 
                 return localData
+    
+            } else if ((!Session.isLoggedIn() && naiveUser.length > 0) || (Session.isLoggedIn() && cloudData)) {
 
-            } else if (Session.isLoggedIn() && cloudData) {
-
-                console.log('User logged in. Fetching from cloud and pushing to local.')
-                
                 this.#pushToLocal(cloudData)
 
                 return cloudData
 
-            } else if (localData) {
-
-                console.log('User logged out. Fetching from local storage.')
-
-                return localData
-
-            } else {
-
-                console.log('New user. Creating new instance')
-
-                return {}
-
-            }
+            } else { return {} }
 
         } catch (error) { console.error("Error in Initialize: ", error.message) }
 
@@ -245,37 +231,41 @@ export class VersionControl {
             
             this.#pushToLocal({profile: data})
 
-            const cloud = await this.#pullFromCloud()
+            if (Session.isLoggedIn()) {
 
-            const cloudLinks = cloud.profile.linkArray
+                const cloud = await this.#pullFromCloud()
 
-            let localLinks = data.linkArray
+                const cloudLinks = cloud.profile.linkArray
 
-            const linksToDelete = cloudLinks
-                .filter(cloudLink => !localLinks.some(localLink => localLink.linkId === cloudLink.linkId))
+                let localLinks = data.linkArray
 
-            localLinks = localLinks
-                .filter(localLink => !linksToDelete.some(deleteLink => deleteLink.linkId === localLink.linkId))
-                .map(link => {
+                const linksToDelete = cloudLinks
+                    .filter(cloudLink => !localLinks.some(localLink => localLink.linkId === cloudLink.linkId))
 
-                    return {
+                localLinks = localLinks
+                    .filter(localLink => !linksToDelete.some(deleteLink => deleteLink.linkId === localLink.linkId))
+                    .map(link => {
 
-                        profile_id: Session.getUser().id,
-                        id: link.linkId,
-                        url: link.linkUrl,
-                        last_updated: link.last_updated,
-                        platform_data: link.platformData,
-                        order: link.order
+                        return {
 
-                    }
+                            profile_id: Session.getUser().id,
+                            id: link.linkId,
+                            url: link.linkUrl,
+                            last_updated: link.last_updated,
+                            platform_data: link.platformData,
+                            order: link.order
 
-                })
+                        }
 
-            this.#database.setProfileData(data)
+                    })
 
-            this.#database.setLinkData(localLinks)
+                this.#database.setProfileData(data)
 
-            this.#database.deleteLinkData(linksToDelete.map(e => e.linkId), Session.getUser().id)
+                this.#database.setLinkData(localLinks)
+
+                this.#database.deleteLinkData(linksToDelete.map(e => e.linkId), Session.getUser().id)
+
+            }
 
         } catch (error) {
             

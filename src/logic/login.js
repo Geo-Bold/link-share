@@ -1,6 +1,6 @@
 import { LocalStorage } from './LocalStorage.js'
-import { Profile } from './Profile.js' // Don't delete
 import { Session } from './Session.js'
+import { Notify } from './Notification.js'
 
 /**
  * Initializes the session and handles form rendering for account creation and login.
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If the active view is for account creation, render the account creation form
     if (activeView === 'create-account') { 
-        
+
         renderCreateAccountView()
 
         document.getElementById('submit').addEventListener('click', e => validateInput(e, Session.createUser.bind(Session)) )
@@ -241,11 +241,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (validEmail && validPassword) {
 
             executeOnSuccess({ email: email.value, password: password.value })
-                .then(user => window.location.href = '../')
+                .then(user => {
+
+                    new Notify('You are now logged in. Welcome!', 'success')
+
+                    localStorage.removeItem('link-app')
+
+                    setTimeout(() => { window.location.href = '../' }, 2000)
+                
+                })
                 .catch(error => console.error('error signing in:', error.message))
 
             clearInvalidInputState()
-                
 
             email.value = ""
 

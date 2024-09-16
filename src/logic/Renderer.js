@@ -2,6 +2,7 @@ import { Session } from "./Session.js"
 import { VersionControl } from "./VersionControl.js"
 import { Link } from "./Link.js";
 import { Sortable } from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/index.mjs';
+import { Notify } from "./Notification.js";
 
 /**
  * The `Renderer` class is responsible for rendering and managing the user interface for links, profiles, and authentication.
@@ -62,8 +63,6 @@ export class Renderer {
             Link.validId.unshift(link.linkId)
 
             this.#removeLinkAndPreview(link) 
-
-            // this.manageLinkPageState()
 
             this.linkArray.pop(link)
 
@@ -336,7 +335,7 @@ export class Renderer {
 
         const profileImage = document.querySelector('#profile-img')
 
-        if (profileImage.src != null) changeSaveButtonState()
+        if (profileImage) changeSaveButtonState()
 
         profileFormInputFields.forEach(input => {
 
@@ -348,7 +347,7 @@ export class Renderer {
 
         function changeSaveButtonState() {
 
-            if (profileForm && (profileFormInputFields.some(input => input.value.length > 0)) || profileImage.src != null) saveButton.classList.remove('disabled')
+            if (profileForm && (profileFormInputFields.some(input => input.value.length > 0)) || profileImage.src > 0) saveButton.classList.remove('disabled')
                     
             else saveButton.classList.add('disabled')
 
@@ -371,9 +370,9 @@ export class Renderer {
 
         const profileImage = profileContainer.querySelector('img')
 
-        // if (profileImage.src.length < 1) profileImageContainer.classList.add('hidden')
+        if (profileImage.src.length < 1) profileImageContainer.classList.add('hidden')
 
-        // else profileImageContainer.classList.remove('hidden')
+        else profileImageContainer.classList.remove('hidden')
 
         if (profileObject.imageString) profileImage.src = profileObject.imageString // Load existing profile image
 
@@ -422,11 +421,13 @@ export class Renderer {
 
                 const containsLink = containsLinkContainer ? containsLinkContainer.querySelector('.link') : null
 
-                if (containsLinkContainer && containsLink && this.#validateLinkData()) {
+                if (containsLink && this.#validateLinkData() || Renderer.linkArray.length === 0) {
 
                     const updateStorageEvent = new CustomEvent('updateStorage')
 
                     document.dispatchEvent(updateStorageEvent)
+
+                    new Notify('Your links have been saved.', 'success')
 
                 }
 
@@ -455,17 +456,13 @@ export class Renderer {
 
                         document.dispatchEvent(customEvent)
 
-                        document.location.reload()
+                        new Notify('Your profile has been saved.', 'success')
+
+                        setTimeout(() => document.location.reload(), 3000) 
 
                     }
     
                 }
-
-
-
-    
-    
-
     
             })
     
@@ -584,7 +581,13 @@ export class Renderer {
 
         }
         
-        if (authButton && !Session.isLoggedIn()) document.location.reload()
+        if (authButton && !Session.isLoggedIn()) {
+
+            new Notify('You are now logged out. Goodbye!', 'information')
+
+            setTimeout(() => document.location.reload(), 2000)
+
+        }
 
     }
 
@@ -602,7 +605,7 @@ export class Renderer {
 
             const linkHtml = `
 
-                <div class="link" id="link-${link.linkId}" draggable="true">
+                <div class="link" id="link-${link.linkId}">
                     <header>
                         <div class="drag-and-drop"></div>
                         <object data="./src/assets/images/icon-drag-and-drop.svg" type="image/svg+xml"></object>
@@ -768,18 +771,18 @@ export class Renderer {
 
         }
 
+        if (this.context.linkPreviewParent) this.#renderProfilePreview(profile)
+
         if (this.context.linkPreviewParent && profile.linkArray.length > 0) {
 
-            this.#renderProfilePreview(profile)
-
-            this.context.linkPreviewParent.innerHTML = ''
+            this.context.linkPreviewParent.innerHTML = '' // Clear placeholders from the preview parent container
 
             profile.linkArray.forEach(link => {
 
                 const linkEl = this.#renderLinkPreview(link)
-
+    
                 this.context.linkPreviewParent.append(linkEl)
-
+    
             })
 
         }

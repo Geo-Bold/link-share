@@ -46,8 +46,6 @@ document.addEventListener('DOMContentLoaded', async (event) => {
 
     }
 
-    
-
     await Session.initialize() // Loads or initializes stored data from local storage and the database using VersionControl.
 
     const storedData = await VersionControl.intialize(new LocalStorage('link-app'), new Database())

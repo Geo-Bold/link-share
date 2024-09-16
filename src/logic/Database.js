@@ -195,7 +195,7 @@ export class Database {
         
             return data
 
-        } catch (error) { console.error('Error in setProfileData: ', err.message) }
+        } catch (error) { console.error('Error in setProfileData: ', error.message) }
 
       }
     /**
