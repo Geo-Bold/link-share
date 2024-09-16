@@ -427,7 +427,7 @@ export class Renderer {
 
                     document.dispatchEvent(updateStorageEvent)
 
-                    new Notify('Your links have been saved.', 'success')
+                    new Notify('Your link data has been saved.', 'success')
 
                 }
 
@@ -558,6 +558,8 @@ export class Renderer {
                 const url = Session.generateSessionUrl()
 
                 navigator.clipboard.writeText(url)
+
+                new Notify('Url copied to clipboard.', 'information')
 
             })
 

@@ -1,3 +1,5 @@
+@import url('./notification.css');
+
 :root {
     --background-color: #191921;
     --container-color: #313140;
@@ -845,80 +847,5 @@ button, a {
     #login-form-toggle {
         display: block;
         text-align: center;
-    }
-}
-
-/*User Notification*/
-@property --deg {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-}
-.notify {
-    position: absolute;
-    width: clamp(22rem, auto, 28rem);
-    bottom: 2.5rem;
-    z-index: 1;
-    font-weight: 600;
-    animation: fade-in 3s ease-in-out;
-    transform: translateY(4rem);
-    visibility: hidden;
-    opacity: 0;
-}
-.notify::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 0.75rem;
-    height: 100%;
-    width: 100%;
-    animation: notify-border 2s linear infinite;
-    background-image: conic-gradient(from var(--deg), var(--notify-0), var(--notify-20), var(--notify-40), var(--notify-20), var(--notify-0));
-    z-index: -1;
-    padding: 0.25rem;
-}
-.notify.success {
-    --notify-0:#48c774;
-    --notify-20: #3a9f5d;
-    --notify-40: #2b7746;
-}
-.notify.information {
-    --notify-0: #3CBEFF;
-    --notify-20: #3098cc;
-    --notify-40: #247299;
-}
-.notify.error {
-    --notify-0: #FF3939;
-    --notify-20: #cc2e2e;
-    --notify-40: #992222;
-}
-.notify-body {
-    display: flex;
-    align-items: center;
-    column-gap: 0.5rem;
-    padding: 1rem 0.5rem;
-    border-radius: 0.5rem;
-    background-color: var(--brand-light-blue);
-    color: var(--background-color);
-}
-@keyframes fade-in {
-    5% {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-    95% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-@keyframes notify-border {
-    from {
-        --deg: 0deg;
-    }
-    to {
-        --deg: 360deg
     }
 }
