@@ -243,11 +243,13 @@ document.addEventListener('DOMContentLoaded', () => {
             executeOnSuccess({ email: email.value, password: password.value })
                 .then(user => {
 
-                    new Notify('You are now logged in. Welcome!', 'success')
+                    if (user) {
 
-                    localStorage.removeItem('link-app')
+                        localStorage.removeItem('link-app')
 
-                    setTimeout(() => { window.location.href = '../' }, 2000)
+                        // setTimeout(() => { window.location.href = '../' }, 2000)
+
+                    }
                 
                 })
                 .catch(error => console.error('error signing in:', error.message))

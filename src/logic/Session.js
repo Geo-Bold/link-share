@@ -92,19 +92,20 @@ export class Session {
 
         try {
 
-            const { user, error } = await Session.#client.auth.signUp({ email, password })
+            const { data, error } = await Session.#client.auth.signUp({ email, password })
+console.log(data)
+console.log(error)
+            if (!data.user || error) throw new Error(error.message)
 
-            if (error) throw new Error(error.message)
-
-            Session.#user = user
+            Session.#user = data.user
 
             Session.#isLoggedIn = true
 
             new Notify('A verification link has been sent to your email.', 'information')
 
-            return user
+            return data.user
 
-        } catch (error) { console.error("Error in createUser: ", error.message) }
+        } catch (error) { new Notify(`${error.message}.`, "error") }
 
     }
 
@@ -298,19 +299,21 @@ export class Session {
 
         try {
             
-            const { user, error } = await Session.#client.auth.signInWithPassword({ email, password })
+            const { data, error } = await Session.#client.auth.signInWithPassword({ email, password })
 
-            if (error) throw new Error(error.message)
+            if (data.user) {
 
-            Session.#user = user
+                Session.#user = data.user
 
-            Session.#isLoggedIn = true
+                Session.#isLoggedIn = true
 
-            new Notify('Login successful, welcome!', 'success')
+                new Notify('Login successful, welcome!', 'success')
 
-            return user
+                return data.user
 
-        } catch (error) { console.error("Failed to sign in user: ", error.message) }
+            } else throw new Error(error.message)
+
+        } catch (error) { new Notify(`${error.message}. Please try again.`, "error") }
 
     }
 
