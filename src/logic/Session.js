@@ -93,8 +93,7 @@ export class Session {
         try {
 
             const { data, error } = await Session.#client.auth.signUp({ email, password })
-console.log(data)
-console.log(error)
+
             if (!data.user || error) throw new Error(error.message)
 
             Session.#user = data.user

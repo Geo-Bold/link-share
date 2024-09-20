@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         localStorage.removeItem('link-app')
 
-                        // setTimeout(() => { window.location.href = '../' }, 2000)
+                        setTimeout(() => { window.location.href = '../' }, 2000)
 
                     }
                 
