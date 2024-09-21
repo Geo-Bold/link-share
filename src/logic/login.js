@@ -241,17 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (validEmail && validPassword) {
 
             executeOnSuccess({ email: email.value, password: password.value })
-                .then(user => {
-
-                    if (user) {
-
-                        localStorage.removeItem('link-app')
-
-                        setTimeout(() => { window.location.href = '../' }, 2000)
-
-                    }
-                
-                })
+                .then(user => { if (user) setTimeout(() => { window.location.href = '../' }, 2000) })
                 .catch(error => console.error('error signing in:', error.message))
 
             clearInvalidInputState()

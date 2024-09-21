@@ -27,20 +27,20 @@ document.addEventListener('DOMContentLoaded', async (event) => {
         // Platform data including title, icon, and URL patterns for each platform
         platformData: [
 
-            { title: 'GitHub', icon: 'github', urlPattern: 'github.com' },
-            { title: 'YouTube', icon: 'youtube', urlPattern: 'youtube.com' },
-            { title: 'Frontend Mentor', icon: 'frontend-mentor', urlPattern: 'frontendmentor.io' },
-            { title: 'X', icon: 'x', urlPattern: 'x.com' },
-            { title: 'LinkedIn', icon: 'linkedin', urlPattern: 'linkedin.com' },
-            { title: 'Facebook', icon: 'facebook', urlPattern: 'facebook.com' },
-            { title: 'Twitch', icon: 'twitch', urlPattern: 'twitch.tv' },
-            { title: 'Dev.to', icon: 'devto', urlPattern: 'dev.to' },
-            { title: 'Codewars', icon: 'codewars', urlPattern: 'codewars.com' },
-            { title: 'Codepen', icon: 'codepen', urlPattern: 'codepen.io' },
-            { title: 'freeCodeCamp', icon: 'freecodecamp', urlPattern: 'freecodecamp.org' },
-            { title: 'GitLab', icon: 'gitlab', urlPattern: 'gitlab.com' },
-            { title: 'Hashnode', icon: 'hashnode', urlPattern: 'hashnode.com' },
-            { title: 'Stack Overflow', icon: 'stack-overflow', urlPattern: 'stackoverflow.com' }
+            { title: 'GitHub', icon: 'github', urlPattern: 'github.com', color: '#8E8E93' },
+            { title: 'YouTube', icon: 'youtube', urlPattern: 'youtube.com', color: '#EE3939' },
+            { title: 'Frontend Mentor', icon: 'frontend-mentor', urlPattern: 'frontendmentor.io', color: '#FFFFFF' },
+            { title: 'X', icon: 'x', urlPattern: 'x.com', color: '#43B7E9' },
+            { title: 'LinkedIn', icon: 'linkedin', urlPattern: 'linkedin.com', color: '#2D68FF' },
+            { title: 'Facebook', icon: 'facebook', urlPattern: 'facebook.com', color: '#2442AC' },
+            { title: 'Twitch', icon: 'twitch', urlPattern: 'twitch.tv', color: '#EE3FC8' },
+            { title: 'Dev.to', icon: 'devto', urlPattern: 'dev.to', color: '#EAF0F1' },
+            { title: 'Codewars', icon: 'codewars', urlPattern: 'codewars.com', color: '#8A1A50' },
+            { title: 'Codepen', icon: 'codepen', urlPattern: 'codepen.io', color: '#1e1f26' },
+            { title: 'freeCodeCamp', icon: 'freecodecamp', urlPattern: 'freecodecamp.org', color: '#302267' },
+            { title: 'GitLab', icon: 'gitlab', urlPattern: 'gitlab.com', color: '#EB4925' },
+            { title: 'Hashnode', icon: 'hashnode', urlPattern: 'hashnode.com', color: '#0330D1' },
+            { title: 'Stack Overflow', icon: 'stack-overflow', urlPattern: 'stackoverflow.com', color: '#EC7100' }
 
         ]
 
@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     const storedData = await VersionControl.intialize(new LocalStorage('link-app'), new Database())
 
     let profile = new Profile(storedData.profile) // Creates or loads an existing profile.
+
+    Renderer.manageNavbar() // Toggles navigation burger and menu states
 
     if (Renderer.context.linkParent) Renderer.enableDragAndDrop() // Enables drag-and-drop functionality for the link elements if they exist in the DOM.
 
