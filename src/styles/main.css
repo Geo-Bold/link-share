@@ -3,6 +3,7 @@
 
 :root {
     --background-color: #191921;
+    --alt-background-color: #47474d;
     --container-color: #313140;
     --alt-container-color: #474757;
     --brand-blue: #3CBEFF;
@@ -630,7 +631,8 @@ button, a {
 
 /*Dragging events*/
 .dragging {
-    opacity: 1; /* Make the dragged element semi-transparent */
+    background-color: var(color);
+    opacity: 0.6; /* Make the dragged element semi-transparent */
 }
 
 /* Hover effect for SVGs */

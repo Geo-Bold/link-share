@@ -283,13 +283,35 @@ export class Renderer {
 
           })
           
-        sortable.on('sortable:start')
+        sortable.on('sortable:start', event => {
 
-        sortable.on('sortable:sort')
+            const sortedElId = event.data.dragEvent.data.source.id
 
-        sortable.on('sortable:sorted')
+            const sortedEl = document.getElementById(sortedElId)
 
-        sortable.on('sortable:stop', this.#updateLinkOrder)
+            sortedEl.classList.add('dragging')
+
+        })
+
+        sortable.on('sortable:stop', (event) => {
+
+            this.#updateLinkOrder()
+
+            const sortedElId = event.data.dragEvent.data.source.id
+
+            const sortedEl = document.getElementById(sortedElId)
+
+            sortedEl.classList.remove('dragging')
+
+        })
+
+        sortable.on('mirror:created', event => {
+
+            const mirrorElement = event.mirror
+            
+            mirrorElement.classList.remove('dragging')
+
+        })
 
     }
 
