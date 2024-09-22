@@ -337,9 +337,11 @@ button, a {
 }
 .profile-preview > #preview-name {
     top: 7rem;
+    user-select: none;
 }
 .profile-preview > #preview-email {
     top: 9.25rem;
+    user-select: none;
 }
 .link-preview {
     width: 100%;
@@ -367,6 +369,9 @@ button, a {
 }
 .mobile-link > div:nth-child(1) {
     display: flex;
+}
+.mobile-link > div:nth-of-type(2) {
+    height: 20px;
 }
 .mobile-link :is(object, p) {
     margin: unset;
@@ -460,8 +465,11 @@ button, a {
 }
 .link > header > .drag-and-drop {
     position: absolute;
-    width: 1.5rem;
-    height: 1.5rem;
+    top: -1rem;
+    left: -1rem;
+    width: 90%;
+    border-radius: 1rem;
+    height: 4.5rem;
     z-index: 2;
 }
 .link > header > button {
@@ -801,6 +809,8 @@ button, a {
     height: min-content;
     color: black;
     font-weight: 700;
+    pointer-events: none;
+    user-select: none;
 }
 .profile-div > .circle {
     display: flex;
@@ -848,6 +858,7 @@ button, a {
 }
 #preview-name {
     font-size: 1.5rem;
+    user-select: none;
 }
 @media (min-width: 769px) {
     .preview header  {
@@ -924,6 +935,11 @@ button, a {
 .login-form > .body :is(.email, .password, .button) {
     position: relative;
     margin-bottom: 1.5rem;
+}
+.password > svg:nth-of-type(2) {
+    position: absolute;
+    left: 91%;
+    cursor: pointer;
 }
 :is(.email, .password) > svg {
     position: absolute;

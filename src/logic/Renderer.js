@@ -452,7 +452,29 @@ export class Renderer {
 
             const file = e.target.files[0]
 
+            const maxSizeInMB = 2.5
+
+            const validFileTypes = ['image/png', 'image/jpg']
+
             if (file) {
+
+                const fileSizeInMb = file.size / (1024 * 1024) // Converts bytes to mb
+
+                if (fileSizeInMb > maxSizeInMB) {
+
+                    new Notify('Please upload a smaller file.', 'error')
+
+                    return
+
+                }
+
+                if (!validFileTypes.includes(file.type)) {
+
+                    new Notify('Please upload a png or jpg.', 'error')
+
+                    return
+
+                }
 
                 const fileReader = new FileReader()
 
@@ -478,7 +500,9 @@ export class Renderer {
 
         const profilePage = document.querySelector('.container')
 
-        if (!Session.isLoggedIn() && profilePage.dataset.page === 'profile') {
+        const existingReset = document.querySelector('#reset')
+
+        if (!Session.isLoggedIn() && profilePage.dataset.page === 'profile' && !existingReset) {
 
             const footer = profilePage.querySelector('footer')
 
