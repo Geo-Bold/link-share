@@ -80,8 +80,6 @@ export class VersionControl {
     
             } else if ((!Session.isLoggedIn() && naiveUser.length > 0) || (Session.isLoggedIn() && cloudData)) {
 
-                this.#pushToLocal(cloudData)
-
                 return cloudData
 
             } else { return {} }
