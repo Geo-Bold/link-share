@@ -41,7 +41,7 @@ export class Notify {
 
         const notifyHtml = `
     
-            <div class="notify ${this.#type}">
+            <div class="notify ${this.#type}" id="notify">
                 <div class="notify-body">
                     <object data="/projects/link-share/src/assets/images/${this.#type}-svgrepo-com.svg" type="image/svg+xml" width="30"></object>
                     <p>${this.#textContent}</p>
@@ -59,6 +59,8 @@ export class Notify {
         const notifyEl = parser.parseFromString(notifyHtml, 'text/html').body.firstChild // Parse the HTML string to an actual DOM element
 
         document.body.append(notifyEl) // Append the new notification to the document body
+
+        notifyEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
         setTimeout(() => notifyEl.remove(), 3000); // Automatically remove the notification after 3 seconds
 
