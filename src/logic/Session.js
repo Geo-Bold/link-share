@@ -188,9 +188,9 @@ export class Session {
 
         try {
             
-            Session.#anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2eHRqc3Jxcmp3aHRteGt6d2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjIxODA1ODYsImV4cCI6MjAzNzc1NjU4Nn0.tpsW736ywZy-CHU5lkm0zcOZo_PwbUpuAwwVd7lXqUU'
+            Session.#anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpxa2JybGJyeGVmdnR5dG9wZmhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU0MDI0ODcsImV4cCI6MjA3MDk3ODQ4N30.du8PE-wqAuZxerAKl9ssRbKTenAgxr8jptz9MEfTisU'
 
-            Session.#databaseUrl = 'https://cvxtjsrqrjwhtmxkzwbz.supabase.co'
+            Session.#databaseUrl = 'https://zqkbrlbrxefvtytopfhc.supabase.co'
 
             Session.#client = createClient(Session.#databaseUrl, Session.#anonKey)
 
