@@ -441,13 +441,13 @@ export class Renderer {
         const profileImageContainer = document.querySelector('.add-profile-input')
 
         const profileImage = profileContainer.querySelector('img')
-
+        
+        if (profileObject.imageString) profileImage.src = profileObject.imageString // Load existing profile image
+        
         if (profileImage.src.length < 1) profileImageContainer.classList.add('hidden')
 
         else profileImageContainer.classList.remove('hidden')
-
-        if (profileObject.imageString) profileImage.src = profileObject.imageString // Load existing profile image
-
+        
         inputFile.addEventListener('change', e => {
 
             const file = e.target.files[0]
