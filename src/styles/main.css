@@ -38,9 +38,6 @@ body {
     color: var(--brand-light-blue);
     position: relative;
 }
-body::-webkit-scrollbar {
-  display: none;
-}
 h1, h2, a, p {
     margin: unset;
 }
@@ -861,7 +858,6 @@ button, a {
 }
 #preview-name {
     font-size: 1.5rem;
-    user-select: none;
 }
 @media (min-width: 769px) {
     .preview header  {
