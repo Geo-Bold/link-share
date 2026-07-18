@@ -38,6 +38,9 @@ body {
     color: var(--brand-light-blue);
     position: relative;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
 h1, h2, a, p {
     margin: unset;
 }
