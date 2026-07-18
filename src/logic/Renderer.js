@@ -452,9 +452,9 @@ export class Renderer {
 
             const file = e.target.files[0]
 
-            const maxSizeInMB = 2.5
+            const maxSizeInMB = 5
 
-            const validFileTypes = ['image/png', 'image/jpg']
+            const validFileTypes = ['image/png', 'image/jpeg', 'image/webp']
 
             if (file) {
 
