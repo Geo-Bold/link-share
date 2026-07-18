@@ -20,7 +20,7 @@ export class Notify {
 
             this.#textContent = text
 
-            if (this.#typeEnum.some(validType => validType === type)) {this.#type = type; console.log('working')}
+            if (this.#typeEnum.some(validType => validType === type)) {this.#type = type;}
 
             else throw new Error("Valid type must be 'success' or 'error'.")
 
